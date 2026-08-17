@@ -3,7 +3,7 @@
 const fs = require("fs");
 
 // 👉 Replace this with your own GitHub Pages address (keep the quotes and the trailing slash):
-const SITE_URL = "https://UlverSR.github.io/dagens-ord/";
+const SITE_URL = "https://ulversr.github.io/dailyenglish.github.io/";
 
 const words = JSON.parse(fs.readFileSync("words.json", "utf8"));
 
