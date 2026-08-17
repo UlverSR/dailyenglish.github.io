@@ -221,6 +221,17 @@
     return words[i];
   }
 
+  // If the page is opened via an e-mail link like "?word=frog", show that word.
+  // Otherwise fall back to the normal word of the day.
+  function initialWord() {
+    const requested = (new URLSearchParams(location.search).get("word") || "").toLowerCase();
+    if (requested) {
+      const match = words.find(w => w.en.toLowerCase() === requested);
+      if (match) return match;
+    }
+    return wordForToday();
+  }
+
   function render(word) {
     current = word;
     document.getElementById("emoji").textContent = word.emoji;
@@ -275,7 +286,7 @@
       if (Array.isArray(list) && list.length) words = list;
     })
     .catch(() => { /* keep the fallback list */ })
-    .finally(() => render(wordForToday()));
+    .finally(() => render(initialWord()));
 
   // Some browsers load voices a moment later; this keeps the button ready.
   if ("speechSynthesis" in window) {
