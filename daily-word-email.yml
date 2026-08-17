@@ -1,0 +1,32 @@
+name: Dagens engelske ord (e-mail)
+
+on:
+  schedule:
+    # Runs at 06:00 UTC every day (about 07:00 in winter / 08:00 in summer, dansk tid).
+    # Change the numbers to move the time. Format: "minute hour * * *" (in UTC).
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}   # lets you run it by hand from the "Actions" tab to test
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hent filerne
+        uses: actions/checkout@v4
+
+      - name: Find dagens ord
+        id: pick
+        run: node daily-word.js
+
+      - name: Send e-mail
+        uses: dawidd6/action-send-mail@v9
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          to: ${{ secrets.MAIL_TO }}
+          from: Dagens engelske ord <${{ secrets.MAIL_USERNAME }}>
+          subject: ${{ steps.pick.outputs.subject }}
+          html_body: ${{ steps.pick.outputs.html }}

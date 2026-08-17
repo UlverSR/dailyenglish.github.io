@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dagens engelske ord</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --sky-top: #8FD3F4;
+    --sky-bottom: #E7F8FF;
+    --sun: #FFD23F;
+    --coral: #FF6B6B;
+    --coral-dark: #E85555;
+    --grass: #5FC96B;
+    --ink: #2E3A4E;
+    --card: #FFFFFF;
+    --shadow: rgba(46, 58, 78, 0.18);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; margin: 0; }
+
+  body {
+    font-family: "Nunito", system-ui, sans-serif;
+    color: var(--ink);
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 70%);
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 24px 16px 40px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .greeting {
+    font-family: "Fredoka", sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 6vw, 2.4rem);
+    margin: 8px 0 4px;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-weight: 700;
+    font-size: clamp(0.95rem, 3.5vw, 1.15rem);
+    opacity: 0.75;
+    margin: 0 0 20px;
+    text-align: center;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 32px;
+    padding: 32px 28px 36px;
+    width: min(92vw, 440px);
+    box-shadow: 0 18px 40px var(--shadow);
+    text-align: center;
+    position: relative;
+    animation: pop-in 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) both;
+  }
+
+  .emoji {
+    font-size: clamp(6rem, 34vw, 9rem);
+    line-height: 1;
+    display: block;
+    margin: 4px auto 12px;
+    animation: wobble 3.2s ease-in-out infinite;
+    user-select: none;
+  }
+
+  .word-en {
+    font-family: "Fredoka", sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 13vw, 4rem);
+    color: var(--coral);
+    margin: 0;
+    letter-spacing: 0.5px;
+    word-break: break-word;
+  }
+
+  .divider {
+    width: 64px;
+    height: 5px;
+    border-radius: 99px;
+    background: var(--sun);
+    margin: 14px auto 12px;
+  }
+
+  .word-da {
+    font-weight: 800;
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .word-da .flag { margin-right: 6px; }
+
+  .speak-btn {
+    font-family: "Fredoka", sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
+    color: #fff;
+    background: var(--grass);
+    border: none;
+    border-radius: 22px;
+    padding: 16px 28px;
+    margin-top: 26px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #4aad55;
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    width: 100%;
+  }
+
+  .speak-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #4aad55;
+  }
+
+  .speak-btn:focus-visible,
+  .shuffle-btn:focus-visible {
+    outline: 4px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .footer {
+    margin-top: 26px;
+    text-align: center;
+  }
+
+  .shuffle-btn {
+    font-family: "Nunito", sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 16px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: transform 0.08s ease;
+  }
+  .shuffle-btn:active { transform: scale(0.96); }
+
+  .next {
+    font-weight: 700;
+    opacity: 0.7;
+    font-size: 0.95rem;
+    margin: 16px 0 0;
+  }
+
+  .date {
+    font-weight: 700;
+    opacity: 0.55;
+    font-size: 0.85rem;
+    margin: 4px 0 0;
+  }
+
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-5deg) translateY(0); }
+    50%      { transform: rotate(5deg) translateY(-6px); }
+  }
+
+  @keyframes pop-in {
+    from { opacity: 0; transform: scale(0.8); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .emoji, .card { animation: none; }
+    .speak-btn, .shuffle-btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <h1 class="greeting">Godmorgen! 🌞</h1>
+  <p class="subtitle">Dagens engelske ord</p>
+
+  <main class="card">
+    <span class="emoji" id="emoji" aria-hidden="true">🍎</span>
+    <p class="word-en" id="wordEn" aria-live="polite">apple</p>
+    <div class="divider"></div>
+    <p class="word-da" id="wordDa"><span class="flag">🇩🇰</span><span id="wordDaText">æble</span></p>
+
+    <button class="speak-btn" id="speakBtn" type="button">🔊 Hør ordet</button>
+  </main>
+
+  <div class="footer">
+    <button class="shuffle-btn" id="shuffleBtn" type="button">🎲 Vis et nyt ord</button>
+    <p class="next">Et nyt ord venter i morgen 🌙</p>
+    <p class="date" id="date"></p>
+  </div>
+
+<script>
+  // A small backup list so the page still works if words.json can't load
+  // (for example when you double-click the file instead of using the website).
+  // Your real list lives in words.json — edit that one to add words.
+  const FALLBACK_WORDS = [
+    { en: "apple", da: "æble", emoji: "🍎" },
+    { en: "dog",   da: "hund", emoji: "🐶" },
+    { en: "sun",   da: "sol",  emoji: "☀️" },
+    { en: "cat",   da: "kat",  emoji: "🐱" },
+    { en: "star",  da: "stjerne", emoji: "⭐" }
+  ];
+
+  let words = FALLBACK_WORDS;
+  let current = words[0];
+
+  // Turn a date into a whole number of days. The same day always gives the
+  // same number, so everyone sees the same "word of the day".
+  function dayNumber(d) {
+    return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+  }
+
+  function wordForToday() {
+    const i = ((dayNumber(new Date()) % words.length) + words.length) % words.length;
+    return words[i];
+  }
+
+  function render(word) {
+    current = word;
+    document.getElementById("emoji").textContent = word.emoji;
+    document.getElementById("wordEn").textContent = word.en;
+    document.getElementById("wordDaText").textContent = word.da;
+  }
+
+  function speak() {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(current.en);
+    u.rate = 0.85; // a little slower, easier for a small child to follow
+    const voices = window.speechSynthesis.getVoices();
+    const enVoice = voices.find(v => v.lang === "en-GB")
+                 || voices.find(v => v.lang && v.lang.startsWith("en"));
+    u.lang = enVoice ? enVoice.lang : "en-GB";
+    if (enVoice) u.voice = enVoice;
+    window.speechSynthesis.speak(u);
+  }
+
+  function showDate() {
+    const d = new Date();
+    document.getElementById("date").textContent =
+      d.toLocaleDateString("da-DK", { weekday: "long", day: "numeric", month: "long" });
+  }
+
+  // A greeting that fits the time of day
+  function greeting() {
+    const h = new Date().getHours();
+    const el = document.querySelector(".greeting");
+    if (h < 11)      el.textContent = "Godmorgen! 🌞";
+    else if (h < 18) el.textContent = "Hej! 👋";
+    else             el.textContent = "Godaften! 🌙";
+  }
+
+  document.getElementById("speakBtn").addEventListener("click", speak);
+  document.getElementById("shuffleBtn").addEventListener("click", () => {
+    let next;
+    do { next = words[Math.floor(Math.random() * words.length)]; }
+    while (words.length > 1 && next.en === current.en);
+    render(next);
+    speak();
+  });
+
+  greeting();
+  showDate();
+
+  // Load the full word list, then show today's word.
+  fetch("words.json")
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(list => {
+      if (Array.isArray(list) && list.length) words = list;
+    })
+    .catch(() => { /* keep the fallback list */ })
+    .finally(() => render(wordForToday()));
+
+  // Some browsers load voices a moment later; this keeps the button ready.
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.onvoiceschanged = () => {};
+  }
+</script>
+</body>
+</html>
