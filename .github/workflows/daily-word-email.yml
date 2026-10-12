@@ -4,7 +4,7 @@ on:
   schedule:
     # Runs at 06:00 UTC every day (about 07:00 in winter / 08:00 in summer, dansk tid).
     # Change the numbers to move the time. Format: "minute hour * * *" (in UTC).
-    - cron: "0 4 * * *"
+    - cron: "23 2 * * *"
   workflow_dispatch: {}   # lets you run it by hand from the "Actions" tab to test
 
 jobs:
